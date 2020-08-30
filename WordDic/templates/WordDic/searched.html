@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+</head>
+<body style="background-color: rgb(223, 255, 220);">
+
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand mb-0 h1" style="margin-left: 43%;">SearchTheWord</span>
+    </nav>
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline" style="margin-left: 43%;" action="search" method="POST">
+          {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <div >
+    <div style="width: 20%; height: 1000px; background-color: oldlace;margin-left: 10px; border-radius: 1%; float: left;">
+    </div>
+    <div style="width: auto; height: 1000px; background-color: oldlace;margin-left: 21%; border-radius: 1%; ">
+    <h1 style="text-align: center;">{{word}}</h1> <br>
+    <div class="row" style="width: auto; height: auto; margin-left: 20px; margin-right: 20px;">
+    <div class="card border-light mb-3" style="max-width: 18rem; margin-block: 10px; margin-left: 20px;">
+        <div class="card-body text-info">
+          <h5 class="card-title">Pronunciaition</h5>
+          <audio id="myAudio">
+            <source src={{audio_file}} type="audio/mpeg">
+        </audio>
+        <div class="row">
+        <i class='far fa-play-circle' onclick="playAudio()" style='font-size:24px;margin-left: 15px;margin-top: 7px;'></i>
+        <script>
+            var x = document.getElementById("myAudio"); 
+            
+            function playAudio() { 
+              x.play(); 
+            } 
+        </script>
+        <p class="card-text" style="margin-left: 10px; font-size: 24px;">{{phonetic}}<br> <i> {{category}} </i></p>
+        </div>
+    </div>
+    </div>
+    <div class="card border-light mb-3" style="max-width: 18rem; margin-block: 10px; margin-left: 20%; ">
+        <div class="card-body text-info">
+          <h5 class="card-title">Definition</h5>
+          <p class="card-text">{{definitions}}</p>
+        </div>
+    </div>
+    <div class="card border-light mb-3" style="max-width: 18rem; margin-block: 10px; margin-left: 20%;">
+        <div class="card-body text-info">
+          <h5 class="card-title">Examples</h5>
+          <p class="card-text">{{examples}}</p>
+        </div>
+    </div>
+    </div>
+    <br>
+    <h2><span class="badge badge-primary" style="margin-block: 10px; margin-left: 20px;">Synonyms</span></h2>
+    <div class="row" style="width: auto; height: auto; margin-left: 20px; margin-right: 20px;">
+    {% for item in synonyms %}
+    <h4><span class="badge badge-secondary" style="margin-block: 10px; margin-left: 10px;">{{item.text}}</span></h4>  
+    {% endfor %}
+    </div><br>
+
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> 
+</body>
+</html>
