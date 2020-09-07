@@ -20,9 +20,80 @@
     </nav>
     <div >
     <!-- <div style="width: 20%; height: 1000px; background-color: blueviolet;margin-left: 10px; border-radius: 3%; "> -->
-    <div style="width: 20%; height: 1000px; background-color: oldlace;margin-left: 10px; border-radius: 3%; float: left;">
+    <div style="width: 20%; height: 1000px; background-color: oldlace;margin-left: 10px; border-radius: 3%; float: left;" >
+        <div card style="text-align: center; background-color: white; margin-left: 10px; border-radius: 10%;margin-right: 10px; margin-top: 10px;">
+            <h2>Word Of The Day</h2>
+        </div>
+        <div style="text-align: center;">
+        <h4>{{word}}</h4>
+        </div>
+        <div class="card bg-light mb-3" style="max-width: 18rem;margin-left: 5px;">
+            <div class="card-body">
+              <h5 class="card-title">Definitions</h5>
+              <p class="card-text">
+                  <ul>
+                      {%for item in data.definitions%}
+                      <p>
+                          {{item.text}}
+                      <p>
+                      {%endfor%}
+                  </ul>
+              </p>
+            </div>
+          </div>
+          <br>
+          <div class="card bg-light mb-3" style="max-width: 18rem;margin-left: 5px;">
+            <div class="card-body">
+              <h5 class="card-title">Examples</h5>
+              <p class="card-text">
+                  <ul>
+                      {%for item in data.examples%}
+                      <p>
+                          {{item.text}}
+                      <p>
+                      {%endfor%}
+                  </ul>
+              </p>
+            </div>
+          </div>
+
     </div>
-    <div style="width: auto; height: 1000px; background-color: oldlace;margin-left: 21%; border-radius: 3%; "></div>
+    <div style="width: auto; height: 1000px; background-color: oldlace;margin-left: 21%; border-radius: 3%; ">
+        <div style="margin-left: 10px; margin-right: 10%;">
+        <ul>
+            <br><br><br>
+            <div class="card" style="border-radius: 3%;">
+                <div class="card-body">
+                  <h5 class="card-title">{{result.0}}</h5>
+                  </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{result.1}}</h5>
+                  </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{result.2}}</h5>
+                  </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{result.3}}</h5>
+                  </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{result.4}}</h5>
+                  </div>
+            </div>
+        </ul>
+    </div>
+    </div>
 </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

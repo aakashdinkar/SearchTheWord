@@ -13,15 +13,49 @@
         <span class="navbar-brand mb-0 h1" style="margin-left: 43%;" onclick="location.href='/'">SearchTheWord</span>
     </nav>
     <nav class="navbar navbar-light bg-light">
-        <form class="form-inline" style="margin-left: 43%;" action="search" method="POST">
-          {% csrf_token %}
+        <div class="form-inline" style="margin-left: 43%;">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
+          <button class="btn btn-outline-info my-2 my-sm-0" onclick="location.href='/'" type="submit">Search</button>
+        </div>
     </nav>
 <div>
-  <div style="width: 20%; height: auto; background-color: oldlace;margin-left: 10px; border-radius: 1%; float: left;">
-  </div>
+  <div style="width: 20%; height: 1000px; background-color: oldlace;margin-left: 10px; border-radius: 3%; float: left;" >
+    <div card style="text-align: center; background-color: white; margin-left: 10px; border-radius: 10%;margin-right: 10px; margin-top: 10px;">
+        <h2>Word Of The Day</h2>
+    </div>
+    <div style="text-align: center;">
+    <h4>{{result.word}}</h4>
+    </div>
+    <div class="card bg-light mb-3" style="max-width: 18rem;margin-left: 5px;">
+        <div class="card-body">
+          <h5 class="card-title">Definitions</h5>
+          <p class="card-text">
+              <ul>
+                  {%for item in result.data.definitions%}
+                  <p>
+                      {{item.text}}
+                  <p>
+                  {%endfor%}
+              </ul>
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="card bg-light mb-3" style="max-width: 18rem;margin-left: 5px;">
+        <div class="card-body">
+          <h5 class="card-title">Examples</h5>
+          <p class="card-text">
+              <ul>
+                  {%for item in result.data.examples%}
+                  <p>
+                      {{item.text}}
+                  <p>
+                  {%endfor%}
+              </ul>
+          </p>
+        </div>
+      </div>
+</div>
   <div style="width: auto; height: 1000px; background-color: oldlace;margin-left: 21%; border-radius: 1%; ">
     <h1 style="font-family: cursive; text-align: center;" onclick="location.href='https://en.wikipedia.org/wiki/{{word}}'">{{word}}</h1>
     {% if defi.inflectedForm %}
@@ -35,12 +69,12 @@
     
     {%endif%}
       {% if misc.adjective %}
-      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal" style="width: 190px; height: 35px; margin-left: 20px;">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#adjectiveModal" style="width: 190px; height: 35px; margin-left: 20px;">
         Adjectives
       </button>
       
       <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="adjectiveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
@@ -133,6 +167,7 @@
           {%endfor%}
         </p>
       </div>
+      {% if defi.image %}
       <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal" style="width: 190px; height: 35px; margin-left: 20px;">
         Image Reference
       </button>
@@ -185,6 +220,7 @@
           </div>
         </div>
       </div>
+      {%endif%}
       {% if defi.subsenses.definitions %}
       <div class="card-body">
         <a class="btn btn-primary" data-toggle="collapse" href="#collapsedefinition" role="button" aria-expanded="false" aria-controls="collapsedefinition">

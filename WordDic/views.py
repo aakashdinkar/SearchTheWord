@@ -3,9 +3,26 @@ import requests
 import json
 import random
 
-
 def index(request):
-    return render(request, 'WordDic/index.html')
+    list_facts = []
+    for item in range(5):
+        list_facts.append(useless())
+    data = word_of_the_day()
+    new_data = extract(data)
+    result_day = {"result":list_facts, 'data':new_data, 'word':data['word']}
+    return render(request, 'WordDic/index.html', result_day)
+
+def extract(data):
+    new_data = {}
+    for item in data:
+        if item == "definitions":
+            if len(data[item]) >= 2:
+                new_data['definitions'] = random.sample(data['definitions'], 2)
+        if item == "examples":
+            if len(data[item]) >= 2:
+                new_data['examples'] = random.sample(data['examples'], 2) 
+        
+    return new_data
 
 def add_to_dic(dic, key, value):
     if key in dic:
@@ -40,7 +57,7 @@ def get_data(word):
         for i in range(len(entries[key])):
             for j in range(len(entries[key][i])):
                 if isinstance(entries[key][i][j], str):
-                    print(entries[key][i][j])
+                    continue
                 else:
                     for k, v in entries[key][i][j].items():
                         add_to_dic(defi, k, v)
@@ -91,6 +108,18 @@ def get_misc(word):
 
     return misc
 
+def word_of_the_day():
+    url = 'https://api.wordnik.com/v4/words.json/wordOfTheDay'
+    params = {'api_key':'hxlhlucaior5wdgfm9rncx86rj6qu7zk1wocbfsd15gclj4hl'}
+    result = requests.get(url, params = params)
+    wordOfTheDay = result.json()
+    return wordOfTheDay
+
+def useless():
+    url = 'https://uselessfacts.jsph.pl/random.json?language=en'
+    response = requests.get(url)
+    return response.json()["text"]
+
 def search(request):
     if request.method == 'POST':
         word = request.POST.get("word")
@@ -98,7 +127,10 @@ def search(request):
         images = get_images(word)
         misc = get_misc(word)
         defi["image"] = images
+        data = word_of_the_day()
+        new_data = extract(data)
+        result_day = {'data':new_data, 'word':data['word']}
         dic = {
-            "defi":defi, "word":word, "misc":misc
+            "defi":defi, "word":word, "misc":misc, 'result':result_day
         }
         return render(request, 'WordDic/searched.html', dic)
